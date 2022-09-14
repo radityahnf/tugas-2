@@ -11,7 +11,7 @@ User akan memberikan suatu request kepada URLs, kemudian akan diteruskan melalui
 
 ## Virtual Environment
 ### Mengapa menggunakan virtual environment
-Dengan menggunakan virtual environment, maka project yang sedang dikerjakan akan terisolasi dari project lain. Dengan menggunakan virtual environment packages serta dependencies yang digunakan tidak akan tercampur antar project. Sehingga penggunaannya akan berguna apabila terdapat beberapa project yang memerlukan package dengan version berbeda
+Dengan menggunakan virtual environment, maka project yang sedang dikerjakan akan terisolasi dari project lain. Artinya packages serta dependencies yang digunakan tidak akan tercampur antar project. Sehingga penggunaannya akan berguna apabila terdapat beberapa project yang memerlukan suatu package dengan version berbeda
 
 ### Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 Ya, kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment. Namun, apabila kita tidak menggunakan virtual environment, maka bisa saja terjadi perubahan yang tidak diinginkan, jika kita melakukan update terhadap packages atau dependencies yang digunakan pada projek Django.
