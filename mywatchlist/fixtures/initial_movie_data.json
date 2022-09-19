@@ -1,0 +1,59 @@
+[
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title": "Jaws",
+            "rating": 5,
+            "release_date": 1975,
+            "review": "Jaws completely absorbs you, as the trio of shark hunters venture off to try to snare the great white you begin to feel part of their adventure."
+
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 2,
+        "fields": {
+            "watched": false,
+            "title": "Titanic",
+            "rating": 5,
+            "release_date": 1997,
+            "review": "Very beautiful and cinematic movie with lots of classic scenes.Also extremely sad at times.Absolute 90's classic."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 3,
+        "fields": {
+            "watched": true,
+            "title": "The Dark Knight",
+            "rating": 5,
+            "release_date": 2008,
+            "review": "Totally one of the greatest movie titles ever made. Everything was great, filming, acting, story. Nothing to complain about"     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 4,
+        "fields": {
+            "watched": true,
+            "title": "The Shawshank Redemption",
+            "rating": 4,
+            "release_date": 1994,
+            "review": "I've lost count of the number of times I have seen this movie, but it is more than 20. It has to be one of the best movies ever made. It made me take notice Morgan Freeman and Tim Robbins like I had never noticed any actors before."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 5,
+        "fields": {
+            "watched": false,
+            "title": "Inception",
+            "rating": 4,
+            "release_date": 2010,
+            "review": "Inception is good, very good, amazingly good. Music: phenomenal. Story: Exceptional. Acting: Great. Cinematography & Special Effects: Fantastic. Overall this is a great movie, although complicated needing a second watch on my end to fully understand everything, this is a must watch for anyone."     
+        }
+    }
+    
+]
