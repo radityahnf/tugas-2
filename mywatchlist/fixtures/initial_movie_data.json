@@ -54,6 +54,61 @@
             "release_date": 2010,
             "review": "Inception is good, very good, amazingly good. Music: phenomenal. Story: Exceptional. Acting: Great. Cinematography & Special Effects: Fantastic. Overall this is a great movie, although complicated needing a second watch on my end to fully understand everything, this is a must watch for anyone."     
         }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 6,
+        "fields": {
+            "watched": false,
+            "title": "Saving Private Ryan",
+            "rating": 3,
+            "release_date": 1998,
+            "review": "It gives a million reason why no one should go to war and one very powerful reason to go to war."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 7,
+        "fields": {
+            "watched": true,
+            "title": "Star Wars: Episode IV - A New Hope",
+            "rating": 5,
+            "release_date": 1977,
+            "review": "Star wars made epic fantasy real. For a generation of people it has defined what the cinema experience is meant to be."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 8,
+        "fields": {
+            "watched": true,
+            "title": "Top Gun: Maverick",
+            "rating": 4,
+            "release_date": 2022,
+            "review": "This movie is fantastic, simply put. I was expecting it to be good, but it's actually much more enjoyable than I had anticipated."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 9,
+        "fields": {
+            "watched": false,
+            "title": "Joker",
+            "rating": 5,
+            "release_date": 2019,
+            "review": "Every once in a while a movie comes, that truly makes an impact. Joaquin's performance and scenography in all it's brilliance."     
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 10,
+        "fields": {
+            "watched": true,
+            "title": "Avengers: Endgame",
+            "rating": 4,
+            "release_date": 2019,
+            "review": "Extremely overhyped movie, loved by marvel fanboys only. Its insulting to say that its the best movie ever."     
+        }
     }
     
 ]
