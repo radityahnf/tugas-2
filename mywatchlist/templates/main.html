@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+  <h1>Tugas 3</h1>
+
+  <h5>Name: </h5>
+  <p>{{nama}}</p>
+
+  <h5>Student ID: </h5>
+  <p>{{id}}</p>
+
+  
+  {% if watched_more %}
+  <h3 style="text-align: center">Selamat, kamu sudah banyak menonton!</h3>
+  {% else %}
+  <h3>Wah, kamu masih sedikit menonton!</h3>
+  {% endif %}
+
+
+  <br>
+  </br>
+  <div style="text-align: center">
+    <button onclick="location.href='/mywatchlist/xml'">XML</button>
+    <button onclick="location.href='/mywatchlist/json'">JSON</button>
+    <button onclick="location.href='/mywatchlist/html'">HTML</button>
+  </div>
+
+ {% endblock content %}

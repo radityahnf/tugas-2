@@ -1,11 +1,11 @@
 # TODO: Implement Routings Here
 from django.urls import path
-from mywatchlist.views import show_watchlist, xml_return, json_return, filtered_json_return, filtered_xml_return
+from mywatchlist.views import show_watchlist, xml_return, json_return, filtered_json_return, filtered_xml_return, count_movie
 
 app_name = 'mywatchlist'
 
 urlpatterns = [
-    path('', show_watchlist, name='show_watchlist'),
+    path('', count_movie, name='count_movie'),
     path('html/', show_watchlist, name='show_watchlist'),
     path('xml/', xml_return, name='xml_return'), 
     path('json/', json_return, name='json_return'), 

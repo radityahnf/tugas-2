@@ -30,3 +30,25 @@ def filtered_json_return(request, id):
 def filtered_xml_return(request,id):
     data = MyWatchList.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def count_movie(request):
+    movies = MyWatchList.objects.all()
+    is_watched = 0
+    watched_more = False
+    
+    
+    for item in movies:
+        if item.watched:
+            is_watched += 1
+    
+    if is_watched > (MyWatchList.objects.count())/2:
+        watched_more = True
+        
+   
+    context = {
+        'watched_more' : watched_more,
+        'nama': 'Muhammad Raditya Hanif',
+        'id': '2106750585'
+    }
+
+    return render(request, "main.html", context)
