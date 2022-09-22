@@ -24,7 +24,7 @@ Menambahkan `mywatchlist` ke dalam `urls.py` pada folder `project_django`
 Membuat model pada `models.py` bernama `MyWatchList` yang memiliki attribut `watched`, `title`, `rating`, `release_date`, dan `review`.
 
 ### Poin 4
-Membuat initial data pada folder `fixtures` bernama `initial_movie_data.json` yang berisi 10 data film.
+Membuat initial data pada folder `fixtures` bernama `initial_movie_data.json` yang berisi 10 data film. Kemudian melakukan migrasi dengan `python manage.py makemigrations` dan `python manage.py migrate`. Setelah itu melakukan load initial data dengan `python manage.py loaddata initial_movie_data.json`
 
 ### Poin 5
 Menambahkan method untuk menampilkan data dengan format HTML, XML, dan JSON pada file `views.py`.
