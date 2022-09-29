@@ -3,6 +3,7 @@
 
 # Pertanyaan 
 ## Apa kegunaan {% csrf_token %} pada elemen form? 
+CSRF token digunakan untuk menambahkans suatu keamanan ke dalam website. CSRF token bekerja dengan membandingkan suatu token, yang dibuat ketika merender suatu halaman, dengan token yang diterima ketika ada suatu HTTP request yang masuk. Dengan adanya CSRF token maka apabila token tidak sesuai, maka request tidak akan dijalankan. 
 
 ## Jelaskan secara gambaran besar bagaimana cara membuat form secara manual.
 Untuk membuat form, kita perlu memanfaatkan elemen `<table>`. Pada table tersebut kita dapat membuat field untuk user mengisi data yang kita inginkan dengan menggunakan `<input>` dan `<input type= 'submit'>` untuk mengirim data dari form yang telah diisi.
