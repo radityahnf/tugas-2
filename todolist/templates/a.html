@@ -34,10 +34,10 @@
         <th>{{todo.title}}</th>
         <th>{{todo.description}}</th>
         <th>
-          {% if todo.status %}
-          Done
+          {% if todo.is_finished %}
+          Selesai
           {% else %}
-          Not Done
+          Belum Selesai
           {% endif %}
         </th>
         
