@@ -67,3 +67,106 @@ def login_user(request):
     context = {}
     return render(request, 'login.html', context)
 ```
+### Poin 5
+Membuat halaman utama pada pada web dengan code sebagai berikut
+```
+<div>
+  <div class="header" style="text-align: center">
+      <p>Hello {{username}}</p>
+  </div>
+
+  
+ 
+
+  
+  <table style="border:1px ;margin-left:auto;margin-right:auto;">
+    {% if task_count > 0 %}
+    <tr>
+      <th>Date</th>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Status</th>
+
+    </tr>
+    {% endif %}
+
+    {% if task_count == 0 %}
+    <tr>
+      <th>Belum ada task yang dibuat</th>
+      
+
+    </tr>
+    {% endif %}
+
+
+    {% comment %} Add the data below this line {% endcomment %}
+    {% for todo in todolist %}
+    <tr>
+        <th>{{todo.date}}</th>
+        <th>{{todo.title}}</th>
+        <th>{{todo.description}}</th>
+        <th>
+          {% if todo.is_finished %}
+          Selesai
+          {% else %}
+          Belum Selesai
+          {% endif %}
+        </th>
+        
+        <th>
+          <button><a href="{% url 'todolist:change' todo.id %}" title="">Change Status</a></button>
+          <button><a href="{% url 'todolist:delete' todo.id %}" title="">Delete</a></button>
+        </th>
+    </tr>
+    {% endfor %}
+  </table>
+  
+  <br>
+  <div style="text-align: center">
+    <button onclick="location.href='/todolist/create-task'">Create New Task</button>
+    <button><a href="{% url 'todolist:logout_user' %}">Logout</a></button>
+  </div>
+    
+</div>
+```
+
+### Poin 6
+Membuat html yang menampilkan form untuk menambahkan Task baru.
+```
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Create New Todo List</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class = "create">
+
+    <h1>Add New Task</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Task:</td>
+                <td><input type="text" name="task" class="form-control"></td>
+            </tr>
+                    
+            <tr>
+                <td>Description: </td>
+                <td><input type="text" name="description" class="form-control"></td>
+            </tr>
+        </table>
+
+        <input type="submit" name="submit" value="Add"/>
+    </form>
+
+
+</div>
+
+{% endblock content %}
+```
+
+### Poin 7
+Menambahkan routing untuk semua fungsi pada `views.py` ke dalam `urls.py` pada folder `todolist`
