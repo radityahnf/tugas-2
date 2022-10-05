@@ -1,10 +1,35 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Login</title>
+<title>Tugas 5 | Login</title>
 {% endblock meta %}
 
 {% block content %}
+
+<style>
+  body {
+    background-image: url(https://img.freepik.com/free-vector/white-background-with-triangle-patterns_1017-18410.jpg?w=2000);
+  }   
+  form {
+    
+   
+   
+    font-size: large; 
+    box-shadow: 0px 0px 20px rgba(143, 143, 143, 0.211); 
+  
+    
+  }
+  .login {
+    padding-top: 1%;
+    padding-bottom: 5%;
+    background-color:rgba(2, 102, 11, 0.277); 
+    
+  }
+ 
+</style>
+
+
+
 
 <div class = "login">
 
@@ -37,8 +62,8 @@
             {% endfor %}
         </ul>
     {% endif %}     
-        
-    <a href="{% url 'todolist:register' %}">Buat Akun</a>
+
+    Belum punya akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
 
 </div>
 
