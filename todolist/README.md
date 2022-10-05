@@ -67,6 +67,10 @@ def login_user(request):
             messages.info(request, 'Username atau Password salah!')
     context = {}
     return render(request, 'login.html', context)
+    
+def logout_user(request):
+    logout(request)
+    return redirect('todolist:login_user')
 ```
 ### Poin 5
 Membuat halaman utama pada pada web dengan code sebagai berikut
