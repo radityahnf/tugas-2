@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 
+<style>
+  .card{
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s ;
+    padding: 14px 80px 18px 36px;
+    cursor: pointer;
+  }
+
+  .card:hover{
+    transform: scale(1.09);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+
+  .navbar{
+    background-color: rgb(38, 18, 128);
+  }
+</style>
+
 
 <html lang="en">
   <head>
@@ -12,7 +32,7 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     
-    <nav class="navbar navbar-expand-lg bg-success">
+    <nav class="navbar navbar-expand-lg ">
       <div class="nav-item dropdown px-3 ">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:ghostwhite">
             MENU
@@ -45,8 +65,6 @@
             <div class ="card">
               <h5 class="card-header d-flex justify-content-between align-items-center">
                 Task : {{todo.title}}
-              
-                <!-- Wrap with <div>...buttons...</div> if you have multiple buttons -->
               </h5>
               <div class="card-body">
                 
@@ -68,9 +86,6 @@
                 <button class ="btn btn-outline-warning btn-light text-decoration-none text-white" ><a href="{% url 'todolist:change' todo.id %}" title="">Change Status</a></button>
                 <button class ="btn btn-outline-danger tn-light text-decoration-none text-white"><a href="{% url 'todolist:delete' todo.id %}" title="">Delete</a></button>
                 </div>
-                
-              
-                <!-- Wrap with <div>...buttons...</div> if you have multiple buttons -->
               </h5>
             </div>
           </div>
