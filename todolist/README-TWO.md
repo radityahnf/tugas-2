@@ -1,4 +1,4 @@
-[HEROKU](https://pbp-tugas2-mrh.herokuapp.com/todolist/)
+
 
 ## Assignment 6
 
