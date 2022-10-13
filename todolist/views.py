@@ -1,29 +1,20 @@
-import datetime
-from todolist.models import Task
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
-@login_required(login_url='/todolist/login/')
-def show_todolist(req):
-    data_todolist = Task.objects.filter(user=req.user)
-    task_count = data_todolist.count()
-    username = req.user
-    ctx = {
-        'task_count' : task_count,
-        'todolist':  data_todolist,
-        'nama': 'Muhammad Raditya Hanif',
-        'id': '2106750585',
-        'username' : username
-    }
+import datetime
 
-    return render(req, "a.html", ctx)
+from todolist.forms import TaskForm
+from todolist.models import Task
 
+# Create your views here.
 def register(request):
     form = UserCreationForm()
 
@@ -39,13 +30,13 @@ def register(request):
 
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user) # melakukan login terlebih dahulu
-            response = HttpResponseRedirect(reverse("todolist:show_todolist")) # membuat response
-            response.set_cookie('last_login', str(datetime.datetime.now())) # membuat cookie last_login dan menambahkannya ke dalam response
+            login(request, user)
+            response = HttpResponseRedirect(reverse('todolist:show_todolist'))
+            response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
         else:
             messages.info(request, 'Username atau Password salah!')
@@ -54,29 +45,71 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('todolist:login_user')
+    response = HttpResponseRedirect(reverse('todolist:login_user'))
+    response.delete_cookie('last_login')
+    return response
 
+@login_required(login_url='/todolist/login/')
+def show_todolist(request):
+    data_tasks = Task.objects.filter(user=request.user)
+    context = {'data_tasks':data_tasks,
+               'user' : request.user,
+               # 'last_login': request.COOKIES['last_login'],
+               }
+    return render(request, 'apake.html', context)
+
+@login_required(login_url='/todolist/login/')
 def add_task(request):
+    form = TaskForm()
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            return redirect('todolist:show_todolist')
+        
+    context = {'form':form}
+    return render(request, 'add_task.html', context)
 
+@csrf_exempt
+def add_task_ajax(request):
     if request.method == 'POST':
-        task = Task(
-            title = request.POST.get('task'),
-            description = request.POST.get('description'),
-            date = datetime.datetime.now(),
-            user = request.user,
-            is_finished = False)
-        task.save()
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        todo = Task.objects.create(title=title, description=description,date=datetime.date.today(), is_finished=False, user=request.user)
 
-        return redirect('todolist:show_todolist')
-    
-    return render(request, 'add_task.html')
+        result = {
+            'fields':{
+                'title':todo.title,
+                'description':todo.description,
+                'is_finished':todo.is_finished,
+                'date':todo.date,
+            },
+            'pk':todo.pk
+        }
+        return JsonResponse(result)
 
-def delete(request, pk):
-    Task.objects.filter(id=pk).delete()
+@csrf_exempt
+def delete_task(request,id):
+    if request.method == "DELETE":
+        task = get_object_or_404(Task, id = id)
+        task.delete()
+
+    return HttpResponse(status=202)
+
+@login_required(login_url='/todolist/login/')
+def update_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if task.is_finished:
+        task.is_finished = False
+    else:
+        task.is_finished = True
+    task.save()
     return redirect('todolist:show_todolist')
 
-def change(request, pk):
-    data = Task.objects.get(id=pk)
-    data.is_finished = not(data.is_finished)
-    data.save()
-    return redirect('todolist:show_todolist')
+@login_required(login_url='/todolist/login/')
+def show_json(request):
+    data_tasks = Task.objects.filter(user=request.user)
+    data = serializers.serialize('json', data_tasks)
+    return HttpResponse(data, content_type='application/json')

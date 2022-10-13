@@ -1,0 +1,218 @@
+{% extends 'base.html' %} {% block meta %}
+<title>Todolist</title>
+<style>
+
+body {
+    background-image: url(https://img.freepik.com/free-vector/white-background-with-triangle-patterns_1017-18410.jpg?w=2000);
+  } 
+
+</style>
+{% endblock meta %} {% block content %}
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const card = (data) => `
+	<div id='${
+            data.pk
+          }-card'
+		  class="task-container mt-5">
+		<div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1">
+			<div class="task-title">
+            <div class="flex gap-4">
+            <div
+              id=${data.pk}
+              class="cursor-pointer remove-todo ${data.pk}"
+            >
+              <button><a class="inline-flex space-x-2 items-center justify-end px-6 py-3 rounded-xl" style="background-color:red;">Delete</a></button>
+            </div>
+            <div
+              onclick="location.href='/todolist/update-task/${data.pk}/'"
+              class="cursor-pointer"
+            >
+			<button><a class="inline-flex space-x-2 items-center justify-end px-6 py-3 rounded-xl" style="background-color:blue;">Change Status</a></button>
+			</div>
+			</div>
+			<div class="text-2xl font-bold mt-4" >${data.fields.title}</div>
+			</a>
+            <div class="task-checkbox-container">
+		</div>
+			</div>
+			<div class="task-description">
+				<hr />
+				<p>${data.fields.description}</p>
+			</div>
+			${
+                data.fields.is_finished
+                  ? `
+                  Status: <b class="text-lg text-green-500"> Finished </b>`
+                  : `Status: <b class="text-lg text-red-500"> Not Yet </b>`
+              }
+		</div>
+        `
+      const addCard = (data) => {
+        return $('#todo').append(card(data))
+      }
+
+      const removeCard = (task) => {
+        $(`#${task.pk}`).click(function () {
+          $.ajax({
+            url: `/todolist/delete-task/${task.pk}`,
+            type: 'DELETE',
+            success: function (response) {
+              $(`#${task.pk}-card`).remove()
+            },
+          })
+        })
+      }
+
+      $.get('/todolist/json', function (todo) {
+        todo.map((task) => {
+          addCard(task)
+          removeCard(task)
+        })
+      })
+
+      $('#add-todo').click(function () {
+        if ($('#title').val() && $('#description').val()) {
+          $.post(
+            '/todolist/add/',
+            {
+              title: $('#title').val(),
+              description: $('#description').val(),
+            },
+            function (res, status) {
+              if (status == 'success') {
+                addCard(res)
+                $('#title').val('')
+                $('#description').val('')
+                removeCard(res)
+              }
+            },
+          )
+        }
+      })
+    })
+  </script>
+</head>
+
+{% if user.is_authenticated %}
+<div class="mx-8 md:mx-14 lg:mx-14 mt-14">
+
+  <div class="text-zinc-200 mt-2 ml-2 text-5xl" style="text-align: center; color: black;" >
+    Hello,  <b>{{user.get_username}}</b>!
+  </div>
+<br>
+
+  <div class="flex-parent jc-center">
+    <div class="flex gap-2 lg:gap-5">
+      <button
+        class="inline-flex space-x-2 items-center justify-center px-6 py-3 rounded-xl"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        style="background-color: green;"
+      >
+        Add Task
+      </button>
+      <button
+        class="inline-flex space-x-2 items-center justify-center px-6 py-3 rounded-xl"
+        style="background-color: red;"
+        >
+        <a href="{% url 'todolist:logout_user' %}  ">Logout</a>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+      <div class="modal-content" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-zinc-200" id="exampleModalLabel">
+            Add Task
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="flex justify-center">
+            <div class="lg:w-64 mt-3">
+              <form method="POST" action="">
+                {% csrf_token %}
+                <label class="block">
+                  <span
+                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-zinc-200"
+                  >
+                    Title
+                  </span>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+                    placeholder="Title"
+                    required
+                  />
+                </label>
+
+                <label class="block mt-2">
+                  <span
+                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-zinc-200"
+                  >
+                    Description
+                  </span>
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+					class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+                    placeholder="Description"
+                    required
+                  />
+                </label>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="inline-flex space-x-2 items-center justify-center px-6 py-3 rounded-xl"
+            data-bs-dismiss="modal"
+            style="background-color: red;"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="add-todo"
+            type="button"
+            class="inline-flex space-x-2 items-center justify-end px-6 py-3 rounded-xl"
+            data-bs-dismiss="modal"
+            style="background-color: green;"
+          >
+            Add Task
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="mb-16 grid lg:grid-cols-2 md:grid-cols-1 gap-5 mt-8 sm:mt-5"
+    id="todo"
+  ></div>
+{% else %}
+<div></div>
+</div>
+{% endif %} {% endblock content %}
